@@ -29,7 +29,7 @@ int main(){
     }
     
     //다이어트 후 원래 일일에너지 섭취량과 일일 활동 대사량으로 돌아감
-    int after_diet = intake2 -(after_basic+active);
+    //int after_diet = intake2 -(after_basic+active);
     
     //일일 기초 대사량 변화 고려 x
     if(weight1 <= 0){
@@ -41,7 +41,7 @@ int main(){
     if(weight2<=0 ||after_basic <=0){
          cout << "Danger Diet"<<"\n";
     }
-    else if (after_diet>0){
+    else if (intake1>after_basic ){
         cout << weight2 <<" "<<  after_basic << "  YOYO"<<"\n";
     }
     else {
