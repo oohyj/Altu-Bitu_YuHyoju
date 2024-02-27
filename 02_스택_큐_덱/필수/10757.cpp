@@ -14,6 +14,10 @@ stack<int> cal(string a , string b){
     reverse(a.begin(), a.end());
     reverse(b.begin(),b.end());
 
+    int max_length= max(a.size(), b.size());
+    a.resize(max_length, '0');
+    b.resize(max_length, '0');
+
     for(int i =0; i< a.size(); i++){
         temp_sum = (a[i]-'0')+(b[i]-'0')+raise;
         raise = temp_sum /10;
