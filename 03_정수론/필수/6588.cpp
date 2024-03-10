@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
+
 
 //에라토스테네스의 체
 vector<bool> findPrime(int n){
@@ -9,7 +11,7 @@ vector<bool> findPrime(int n){
     is_prime[0] = is_prime[1] = false;
     for(int i =2 ; i*i <= n ; i++){
        if(is_prime[i]){
-           for(int j =i*i; j<=n ; j += i){
+           for(int j =i*i; j<= n ; j += i){
                is_prime[j] = false;
            }
        }
@@ -18,18 +20,15 @@ vector<bool> findPrime(int n){
 }
 
 // b-a 값이 가장 큰 거 찾아서 출력
-void findBigOne(vector<bool> is_prime){
+int findBigOne(int n , vector<bool> &is_prime){
 
-    for(int i =2; i< is_prime.size(); i++){
-        int rest = is_prime.size()-1 - i;
-        if(is_prime[i] && is_prime[rest]) {
-            cout << rest + i << " = " << i <<" + "<< rest <<"\n";
-            return;
+    for(int i =3; i<= n/2; i+=2){
+        if(is_prime[i] && is_prime[n-i]) {
+            return i;
         }
     }
     //두 홀수 소수의 합으로 나타낼 수 없는 경우
-    cout << "Goldbach's conjecture is wrong." << "\n";
-    return;
+    return 0;
 }
 
 int main(){
@@ -49,11 +48,20 @@ int main(){
         else input.push_back(n);
     }
 
-    //에라토스테네스의 체로 소수 걸러내고 b-a가 가장 큰 것 찾아내기
-    for(int i =0; i<input.size(); i++){
-        vector<bool> is_prime = findPrime(input[i]);
-        findBigOne(is_prime);
-    }
+     int max_num = *max_element(input.begin(),input.end()); //*max_element는 범위 중에 가장 큰 값의 value를 반환함
+     vector<bool> is_prime = findPrime(max_num); //가장 큰 값까지 소수 여부 먼저 구하기
 
-    return 0;
+    for(int i =0; i<input.size(); i++){
+        int a = findBigOne(input[i],is_prime);
+
+        //출력
+        if(a !=0) {
+            cout << input[i] << " = " << a <<" + "<< input[i]-a <<"\n";
+        }
+        else{
+            cout << "Goldbach's conjecture is wrong.\n";
+        }
+        }
+
+     return 0;
 }

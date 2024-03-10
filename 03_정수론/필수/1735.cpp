@@ -1,19 +1,17 @@
 #include <iostream>
-#include <algorithm>
 
 using namespace std;
 
+//최대공약수 구하기
+int getGcd(int a, int b) {
+    if (b == 0) return a;
+    return getGcd(b, a % b);
+}
+
+//최소공배수
 int getLcd(int a , int b){
-    int gcd =0;
-
-    for(int i = min(a,b); i > 0 ; i--){
-        if(a % i ==0 && b % i ==0){
-            gcd = i;
-            return (a*b) / gcd;
-        }
-    }
-
-    return  1;
+    int gcd = getGcd(a,b);
+    return (a*b)/ gcd;
 }
 
 //분자값 더하기
@@ -29,8 +27,14 @@ int main(){
     //최소 공배수 구하기
     int lcd = getLcd(a_den, b_den);
     int sum = addNum(a_num,a_den,lcd) + addNum(b_num , b_den, lcd);
+    int gcd = getGcd(lcd , sum);
+
+    sum = sum /gcd;
+    lcd = lcd /gcd;
+
 
     cout << sum << " "<< lcd << "\n";
 
     return 0;
 }
+
