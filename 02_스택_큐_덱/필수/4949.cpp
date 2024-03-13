@@ -1,40 +1,62 @@
 #include <iostream>
 #include <stack>
-
+#include <string>
 
 using namespace std;
 
+bool isBalanced(string input){
+    stack<char> s;
+
+    for(int i =0; i<input.length(); i++) {
+        char ch = input[i];
+
+        switch (ch) {
+            case '(':
+            case '[':
+                s.push(ch);
+                break;
+
+            case ')':
+                if (s.empty() || s.top() != '(') {
+                    return false;
+                }
+                s.pop();
+                break;
+
+            case ']':
+                if (s.empty() || s.top() != '[') {
+                    return false;
+                }
+                s.pop();
+                break;
+        }
+    }
+    return s.empty();
+}
+
 int main(){
 
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+
+    string input;
 
     while(true){
+        getline(cin, input);
 
-        char a[100];
-        stack<char> s;
-        cin.getline(a,100);
-        if(a[0] == '.') break;
-
-        for(int i =0; i< 100; i++){
-            if(a[i] == '(' || a[i] =='[') s.push(a[i]);
-            else if(a[i] == ')'){
-                if(!s.empty() && s.top() == '(') s.pop();
-                else {
-                    s.push(a[i]);
-                    break;
-                }
-            }
-            else if(a[i] == ']'){
-                if(!s.empty() && s.top() =='[') s.pop();
-                else {
-                    s.push(a[i]);
-                    break;
-                }
-            }
+        if(input =="."){
+            break;
         }
-        if (s.empty()) cout<< "yes"<<"\n";
-        else cout <<"no" <<"\n";
-    }
 
+        //연산 & 출력
+        if(isBalanced(input)){
+            cout <<"yes\n";
+        }
+        else {
+            cout<<"no\n";
+        }
+    }
 
     return 0;
 }
